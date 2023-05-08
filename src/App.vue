@@ -28,7 +28,7 @@ const characters = ref([{
   image:"",
   name:"",
   id:"",
-  episode:"",
+  
 }])
 
 onMounted(() => {
@@ -39,7 +39,7 @@ onMounted(() => {
         image: i.image,
         name: i.name,
         id: i.id,
-        episode: i.episode,
+  
       }))
     })
 }) 
