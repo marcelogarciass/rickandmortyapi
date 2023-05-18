@@ -11,8 +11,19 @@
         <div class="card-body">
           <h1 class="card-title">{{ character.name }}</h1> 
           <h2 class="card-title">Id {{character.id}}</h2>
-          <h2 class="card-title">Statuss {{character.status}}</h2>
-          <p>{{ character.episode }}</p>
+          <h2 class="card-title"> Status atual
+            <font-awesome-icon
+              v-if="character.status === 'Alive'"
+              :icon="aliveIcon"
+              class="alive-icon"
+            />
+            <font-awesome-icon
+              v-else-if="character.status === 'Dead'"
+              :icon="deadIcon"
+              class="dead-icon"
+            />
+          </h2>
+          <p></p>
           <div class="card-actions justify-end">
             <button class="btn btn-primary" :key="character.id" @click="redirectToBuy(character.id)" >Tudo sobre mim</button>
           </div>
@@ -26,6 +37,12 @@
 import './input.css'
 import { onMounted, ref, watchEffect } from 'vue'
 import { getCharacters } from "./services/api"
+
+import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import { library } from '@fortawesome/fontawesome-svg-core'
+import { faHeart as fasHeart, faSkullCrossbones as fasSkullCrossbones } from '@fortawesome/free-solid-svg-icons'
+
+library.add(fasHeart, fasSkullCrossbones)
 
 const characters = ref([
   {
@@ -53,6 +70,9 @@ onMounted(() => {
 watchEffect(() => {
   console.log("Characters", characters.value)
 })
+
+const aliveIcon = ['fas', 'heart']
+const deadIcon = ['fas', 'skull-crossbones']
 
 const redirectToBuy = (id: string) => {
   window.open(`https://rickandmortyapi.com/api/character/${id}`)
